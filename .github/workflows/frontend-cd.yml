@@ -45,6 +45,6 @@ jobs:
         run: aws eks --region us-east-1 update-kubeconfig --name cluster
       - name: Deploy to EKS
         run: |
-            cd starter/frontend
+            cd starter/frontend/k8s
             kustomize edit set image frontend=833847858982.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
             kustomize build | kubectl apply -f -
