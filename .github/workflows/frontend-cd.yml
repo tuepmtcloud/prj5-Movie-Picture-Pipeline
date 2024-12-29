@@ -39,7 +39,9 @@ jobs:
       - name: Build, tag, and push docker image to Amazon ECR
         run: |
           cd starter/frontend
-          docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag 833847858982.dkr.ecr.us-east-1.amazonaws.com/frontend:latest .
+          export BACKEND_APP_URL=$(kubectl get svc backend -o=jsonpath='{.status.loadBalancer.ingress[0].hostname}{"\n"}{.status.loadBalancer.ingress[0].ip}')
+          echo $BACKEND_APP_URL
+          docker build --build-arg=REACT_APP_MOVIE_API_URL=http://$BACKEND_APP_URL --tag 833847858982.dkr.ecr.us-east-1.amazonaws.com/frontend:latest .
           docker push 833847858982.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
       - name: Update the Kubeconfig
         run: aws eks --region us-east-1 update-kubeconfig --name cluster
