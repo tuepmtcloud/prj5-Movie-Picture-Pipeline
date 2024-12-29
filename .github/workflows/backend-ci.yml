@@ -20,6 +20,9 @@ jobs:
       - name: linting
         run:  |
           cd starter/backend
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pip install flake8
           pipenv install
           pipenv run lint
 
@@ -35,6 +38,9 @@ jobs:
       - name: linting
         run:  |
           cd starter/backend
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pip install flake8
           pipenv install
           pipenv run test
 
@@ -51,5 +57,4 @@ jobs:
       - name: building
         run:  |
           cd starter/backend
-          pipenv install
           docker build --tag mp-backend:latest .
